@@ -155,7 +155,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                     address.getAddressLine(0));
         }
     }
-
+    @SuppressWarnings("unchecked")
     private void getDeviceLocation(){
         Log.d(TAG, "getDeviceLocation: getting the devices current location");
 

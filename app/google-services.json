@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "662879253398",
+    "firebase_url": "https://sincere-tape-273209.firebaseio.com",
+    "project_id": "sincere-tape-273209",
+    "storage_bucket": "sincere-tape-273209.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:662879253398:android:1d06f05e003e479b9f23b7",
+        "android_client_info": {
+          "package_name": "com.example.loginschoolpool"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "662879253398-vg8i618jk6raf56ekb67sk374c32rf02.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.loginschoolpool",
+            "certificate_hash": "d18e04408dd5c62034148e0b252eed2cbf26e0f6"
+          }
+        },
+        {
+          "client_id": "662879253398-siocs95tcfr0rn8fbdebuesi0ooqqe1a.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCQg5TeZEtkO6rc0wbbXJJqsQSmC4lKUtg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "662879253398-siocs95tcfr0rn8fbdebuesi0ooqqe1a.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -5,6 +5,7 @@
     style="@style/splashscreen"
     android:visibility="visible">
 
+
     <ProgressBar
         android:id="@+id/progressBar3"
         style="?android:attr/progressBarStyle"
@@ -19,6 +20,6 @@
         tools:ignore="UnknownId"
         android:indeterminate="true"
         android:indeterminateTintMode="src_atop"
-        android:indeterminateTint="@color/purple"/>
+        android:indeterminateTint="@color/lightPurple"/>
 
 </RelativeLayout>
