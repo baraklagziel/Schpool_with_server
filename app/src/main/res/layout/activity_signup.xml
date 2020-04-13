@@ -93,8 +93,8 @@
         android:layout_marginBottom="227dp"
         android:background="@drawable/button_route_background"
         android:ems="10"
+        android:inputType="textPassword"
         android:hint="     Password"
-        android:inputType="textPersonName"
         android:paddingLeft="10dp"
         android:textAlignment="viewStart"
         android:textColorHint="#7E7777" />
@@ -106,13 +106,26 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginStart="135dp"
+        android:layout_marginStart="123dp"
         android:layout_marginTop="36dp"
-        android:layout_marginBottom="148dp"
+        android:layout_marginBottom="153dp"
         android:background="@drawable/button_route_background"
         android:onClick="onClick"
         android:text="REGISTER"
         android:textColor="#090808"
         android:textColorHighlight="#373131" />
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="154dp"
+        android:layout_height="76dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="119dp"
+        android:layout_marginEnd="137dp"
+        android:layout_marginBottom="44dp" />
 
 </RelativeLayout>
