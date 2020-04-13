@@ -21,6 +21,7 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:targetApi="m">
+        <activity android:name=".SignUpActivity"></activity>
 
         <uses-library
             android:name="org.apache.http.legacy"
@@ -30,7 +31,6 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/map_key" />
 
-        <activity android:name=".SignInActivity" />
         <activity
             android:name=".MapsActivity"
             android:label="@string/title_activity_google_maps" />

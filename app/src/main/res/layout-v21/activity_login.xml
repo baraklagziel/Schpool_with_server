@@ -5,7 +5,7 @@
     android:id="@+id/size"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/gradiwnt_blue_and_purple"
+    android:background="@drawable/gradient_blue_and_purple"
     tools:context=".LoginActivity">
 
 
@@ -145,9 +145,12 @@
         android:layout_centerHorizontal="true"
         android:layout_marginEnd="116dp"
         android:layout_marginBottom="54dp"
+        android:onClick="onClick"
+        android:clickable="true"
         android:fontFamily="@font/quicksand_medium"
         android:text="Don't have an account ?"
-        android:textColor="#FFFAFA" />
+        android:textColor="#FFFAFA"
+        android:focusable="true" />
 
     <!--    <ImageView-->
 <!--        android:id="@+id/imageView2"-->

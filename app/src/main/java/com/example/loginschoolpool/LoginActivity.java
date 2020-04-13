@@ -331,10 +331,16 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     @Override
     public void onClick(View v) {
         int i = v.getId();
+        Intent intent = null;
         if (i == R.id.button_login_now) {
             signIn(mEmailField.getText().toString(), mPasswordField.getText().toString());
-
+            return;
         }
+        else if(i == R.id.textView_create_account){
+            intent = new Intent(this,SignUpActivity.class);
+        }
+
+        if(null != intent) startActivity(intent);
     }
 }
 
