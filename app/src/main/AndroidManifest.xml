@@ -34,16 +34,22 @@
         <activity
             android:name=".MapsActivity"
             android:label="@string/title_activity_google_maps" />
-        <activity android:name=".RouteActivity" />
-        <activity android:name=".AppActivity" />
-        <activity
-            android:name=".SplashScreen"
-            android:theme="@style/SplashScreen">
+        <activity android:name=".RouteActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity android:name=".AppActivity" />
+        <activity
+            android:name=".SplashScreen"
+            android:theme="@style/SplashScreen">
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.MAIN" />-->
+
+<!--                <category android:name="android.intent.category.LAUNCHER" />-->
+<!--            </intent-filter>-->
         </activity>
         <activity
             android:name=".LoginActivity"
