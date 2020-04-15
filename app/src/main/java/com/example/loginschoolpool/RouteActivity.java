@@ -5,8 +5,9 @@ import androidx.fragment.app.DialogFragment;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.Context;
 import android.content.Intent;
-import android.icu.util.ICUUncheckedIOException;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -16,7 +17,6 @@ import android.widget.TimePicker;
 
 import java.text.DateFormat;
 import java.util.Calendar;
-import java.util.Date;
 
 
 /**
@@ -25,20 +25,41 @@ import java.util.Date;
  *                      1. home   --->  school
  */
 public class RouteActivity extends AppCompatActivity implements View.OnClickListener , DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener {
-    private Button setHomeButton;
-    private Button setSchoolButton;
+    private TextView setHomeTextView;
+    private TextView setSchoolTextView;
+    private  TextView setDateTextView;
+    private  TextView setTimeTextView;
+    private Button finishButton;
     @Override
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_route);
 
-        setHomeButton = (Button) findViewById(R.id.button_set_home);
-        setSchoolButton = (Button) findViewById(R.id.button_set_school);
+        setHomeTextView = (TextView) findViewById(R.id.button_set_home);
+        setSchoolTextView = (TextView) findViewById(R.id.button_set_school);
+        setDateTextView = (TextView)findViewById(R.id.textView_date);
+        setTimeTextView = (TextView)findViewById(R.id.textView_time);
+        finishButton = (Button)findViewById(R.id.Button_finish);
 
-        setHomeButton.setOnClickListener(new View.OnClickListener() {
+        SharedPreferences sharedPref = getSharedPreferences("BARAK", Context.MODE_PRIVATE);
+
+        SetStartAndTargetLocationsIfExist(sharedPref);
+
+        setHomeTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent  = new Intent(RouteActivity.this, MapsActivity.class);
+                intent.putExtra("context", "START_LOCATION");
+                startActivity(intent);
+            }
+        });
+
+        setSchoolTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent  = new Intent(RouteActivity.this,MapsActivity.class);
+                intent.putExtra("context", "TARGET_LOCATION");
                 startActivity(intent);
             }
         });
@@ -61,6 +82,46 @@ public class RouteActivity extends AppCompatActivity implements View.OnClickList
             }
         });
 
+
+        finishButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(validation()){
+                    Intent intent = new Intent(getApplicationContext(),testMatchMate.class);
+                    intent.putExtra("SET_HOME_LOCATION", setHomeTextView.getText().toString());
+                    intent.putExtra("SET_SCHOOL_LOCATION",setSchoolTextView.getText().toString());
+                    intent.putExtra("SET_DATE",setDateTextView.getText().toString());
+                    intent.putExtra("SET_TIME",setTimeTextView.getText().toString());
+
+                    startActivity(intent);
+
+                }
+                else return;
+            }
+
+            private boolean validation() {
+                //Check if all tabs is full;
+                if(!setTimeTextView.getText().toString().matches("") &&
+                   !setTimeTextView.getText().toString().matches("") &&
+                   !setHomeTextView.getText().toString().matches("") &&
+                   !setSchoolTextView.getText().toString().matches("")){
+                    return true;
+                }
+
+                else{
+                    finishButton.setError("Fill all the Fields");
+                    return  false;
+                }
+            }
+        });
+
+    }
+
+    private void SetStartAndTargetLocationsIfExist(SharedPreferences sharedPref) {
+        String startLocation = sharedPref.getString("START_LOCATION", "");
+        setHomeTextView.setText(startLocation);
+        String targetLocation = sharedPref.getString("TARGET_LOCATION", "");
+        setSchoolTextView.setText(targetLocation);
     }
 
     @Override

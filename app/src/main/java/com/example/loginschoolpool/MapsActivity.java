@@ -2,6 +2,9 @@ package com.example.loginschoolpool;
 
 
 import android.Manifest;
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
@@ -12,7 +15,6 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
-import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -38,14 +40,16 @@ import com.google.android.gms.tasks.Task;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 /**
  * MapsActivity class - To display the screen of Google map i had to access Google Maps API
  *                      I am set the destiny and target location and move on...
  */
 
-public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback {
+public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback  {
+
+    private String context;
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
@@ -64,6 +68,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             mMap.setMyLocationEnabled(true);
             mMap.getUiSettings().setMyLocationButtonEnabled(false);
 
+            context = getIntent().getExtras().getString("context");
+
             init();
         }
     }
@@ -79,6 +85,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     private EditText mSearchText;
     private ImageView mGps;
 
+
     //vars
     private Boolean mLocationPermissionsGranted = false;
     private GoogleMap mMap;
@@ -88,7 +95,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map);
-        mSearchText = (EditText) findViewById(R.id.input_search);
+        mSearchText = (EditText) findViewById(R.id.EditText_input_search);
         mGps = (ImageView) findViewById(R.id.ic_gps);
 
         getLocationPermission();
@@ -97,6 +104,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 //        autoCompleteTextView.setAdapter(new PlaceAutoSuggestAdapter(MapsActivity.this,android.R.layout.simple_list_item_1));
 
     }
+
+
 
 
 
@@ -114,6 +123,12 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
                     //execute our method for searching
                     geoLocate();
+                    try {
+                        TimeUnit.SECONDS.sleep(3);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    transferDataToRouteActivity();
                     return  true;
                 }
 
@@ -260,5 +275,25 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
     }
 
+//    @Override
+//    public void onClick(View v) {
+//        int i = v.getId();
+//        if (i == EditorInfo.IME_ACTION_SEARCH
+//                || i == EditorInfo.IME_ACTION_DONE) {
+//            transfarDataToRouteActivity();
+//        }
+//    }
+
+
+
+    private void transferDataToRouteActivity() {
+        SharedPreferences sharedPref = getSharedPreferences("BARAK", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putString(context, mSearchText.getText().toString().trim());
+        editor.commit();
+
+        Intent intent = new Intent(getApplicationContext(), RouteActivity.class);
+        startActivity(intent);
+    }
 }
 
