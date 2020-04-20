@@ -1,5 +1,6 @@
 package com.example.loginschoolpool;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
 
@@ -8,10 +9,13 @@ import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
@@ -30,6 +34,8 @@ public class RouteActivity extends AppCompatActivity implements View.OnClickList
     private  TextView setDateTextView;
     private  TextView setTimeTextView;
     private Button finishButton;
+    private Intent intentToMatchDriversActivity;
+
     @Override
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,10 +48,11 @@ public class RouteActivity extends AppCompatActivity implements View.OnClickList
         setTimeTextView = (TextView)findViewById(R.id.textView_time);
         finishButton = (Button)findViewById(R.id.Button_finish);
 
+
         SharedPreferences sharedPref = getSharedPreferences("BARAK", Context.MODE_PRIVATE);
 
         SetStartAndTargetLocationsIfExist(sharedPref);
-
+        intentToMatchDriversActivity = new Intent(getApplicationContext(),MatchDrivers.class);
         setHomeTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -64,7 +71,7 @@ public class RouteActivity extends AppCompatActivity implements View.OnClickList
             }
         });
 
-        Button buttonDatePicker = (Button)findViewById(R.id.button_date_picker);
+        ImageButton buttonDatePicker = (ImageButton)findViewById(R.id.button_date_picker);
         buttonDatePicker.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -73,7 +80,7 @@ public class RouteActivity extends AppCompatActivity implements View.OnClickList
             }
         });
 
-        Button buttonTimePicker = (Button)findViewById(R.id.button_time_picker);
+        ImageButton buttonTimePicker = (ImageButton)findViewById(R.id.button_time_picker);
         buttonTimePicker.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -87,13 +94,13 @@ public class RouteActivity extends AppCompatActivity implements View.OnClickList
             @Override
             public void onClick(View v) {
                 if(validation()){
-                    Intent intent = new Intent(getApplicationContext(),testMatchMate.class);
-                    intent.putExtra("SET_HOME_LOCATION", setHomeTextView.getText().toString());
-                    intent.putExtra("SET_SCHOOL_LOCATION",setSchoolTextView.getText().toString());
-                    intent.putExtra("SET_DATE",setDateTextView.getText().toString());
-                    intent.putExtra("SET_TIME",setTimeTextView.getText().toString());
 
-                    startActivity(intent);
+                    intentToMatchDriversActivity.putExtra("SET_HOME_LOCATION", setHomeTextView.getText().toString());
+                    intentToMatchDriversActivity.putExtra("SET_SCHOOL_LOCATION",setSchoolTextView.getText().toString());
+                    //intentToMatchDriversActivity.putExtra("SET_DATE",setDateTextView.getText().toString());
+                   // intentToMatchDriversActivity.putExtra("SET_TIME",setTimeTextView.getText().toString());
+
+                    startActivity(intentToMatchDriversActivity);
 
                 }
                 else return;
@@ -122,6 +129,10 @@ public class RouteActivity extends AppCompatActivity implements View.OnClickList
         setHomeTextView.setText(startLocation);
         String targetLocation = sharedPref.getString("TARGET_LOCATION", "");
         setSchoolTextView.setText(targetLocation);
+        String datePicker = sharedPref.getString("SET_DATE", "");
+        setDateTextView.setText(datePicker);
+        String timePicker = sharedPref.getString("SET_TIME", "");
+        setTimeTextView.setText(timePicker);
     }
 
     @Override
@@ -131,19 +142,34 @@ public class RouteActivity extends AppCompatActivity implements View.OnClickList
 
     @Override
     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+        intentToMatchDriversActivity.putExtra("SET_YEAR", year);
+        month++;
+        intentToMatchDriversActivity.putExtra("SET_MONTH", month );
+        intentToMatchDriversActivity.putExtra("SET_DAY", dayOfMonth);
+        month--;
         Calendar c = Calendar.getInstance();
         c.set(Calendar.YEAR,year);
         c.set(Calendar.MONTH,month);
         c.set(Calendar.DAY_OF_MONTH,dayOfMonth);
         String currentDateString  = DateFormat.getDateInstance(DateFormat.FULL).format(c.getTime());
-
+        SharedPreferences.Editor editor = getSharedPreferences("BARAK", MODE_PRIVATE).edit();
+        editor.putString("SET_DATE",currentDateString);
+        editor.commit();
         TextView textView = (TextView)findViewById(R.id.textView_date);
         textView.setText(currentDateString);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+        String AM_PM = (hourOfDay < 12) ? "AM" : "PM";
+        intentToMatchDriversActivity.putExtra("SET_AM_PM" , AM_PM);
+        intentToMatchDriversActivity.putExtra("SET_HOUR", view.getHour());
+        intentToMatchDriversActivity.putExtra("SET_MINUTE", view.getMinute());
+        SharedPreferences.Editor editor = getSharedPreferences("BARAK", MODE_PRIVATE).edit();
+        editor.putString("SET_TIME",String.format("%02d:%02d", hourOfDay,minute));
+        editor.commit();
         TextView textViewTime = (TextView)findViewById(R.id.textView_time);
-        textViewTime.setText( hourOfDay + ":" + minute);
+        textViewTime.setText(String.format("%02d:%02d", hourOfDay,minute));
     }
 }

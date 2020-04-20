@@ -21,7 +21,24 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:targetApi="m">
-        <activity android:name=".testMatchMate"></activity>
+        <activity android:name=".FirebaseStorageInsert"/>
+
+        <activity android:name=".MatchDrivers" >
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.MAIN" />-->
+
+<!--                <category android:name="android.intent.category.LAUNCHER" />-->
+<!--            </intent-filter>-->
+
+        </activity>
+        <activity android:name=".DatabaseInsert" >
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.MAIN" />-->
+
+<!--                <category android:name="android.intent.category.LAUNCHER" />-->
+<!--            </intent-filter>-->
+        </activity>
+        <activity android:name=".testMatchMate" />
         <activity android:name=".SignUpActivity" />
 
         <uses-library
@@ -47,24 +64,16 @@
             android:name=".SplashScreen"
             android:theme="@style/SplashScreen">
 
-            <!-- <intent-filter> -->
-            <!-- <action android:name="android.intent.action.MAIN" /> -->
+<!--             <intent-filter> -->
+<!--             <action android:name="android.intent.action.MAIN" /> -->
 
 
-            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
-            <!-- </intent-filter> -->
+<!--             <category android:name="android.intent.category.LAUNCHER" /> -->
+<!--             </intent-filter> -->
         </activity>
         <activity
             android:name=".LoginActivity"
-            android:theme="@style/AppTheme">
-
-            <!-- <intent-filter> -->
-            <!-- <action android:name="android.intent.action.MAIN" /> -->
-
-
-            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
-            <!-- </intent-filter> -->
-        </activity>
+            android:theme="@style/AppTheme" />
 
         <meta-data
             android:name="preloaded_fonts"

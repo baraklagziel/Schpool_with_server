@@ -17,5 +17,10 @@
         <item name="android:layout_height">match_parent</item>
     </style>
 
+    <style name="datepicker" parent="Theme.AppCompat.Light.Dialog">
+        <item name="colorPrimary">@color/holo_purple</item>
+        <item name="colorPrimaryDark">#ffaa66cc</item>
+        <item name="colorAccent">#ffaa66cc</item>
+    </style>
 
 </resources>

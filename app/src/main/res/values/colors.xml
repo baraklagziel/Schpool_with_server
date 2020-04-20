@@ -7,4 +7,6 @@
     <color name = "lightPurple">#EBC5F2</color>
     <color name = "purple">#A666EA</color>
     <color name = "lightBlue">#D5E6ED</color>
+    <color name="holo_purple">#ffaa66cc</color>
+    <color name= "red">#ff0040</color>
 </resources>
